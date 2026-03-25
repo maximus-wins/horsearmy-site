@@ -1,10 +1,16 @@
 // Vercel Serverless Function for GoHighLevel Integration
 // This runs server-side to avoid CORS and keep credentials secure
 
-const GHL_API_KEY = 'pit-c6d9c8db-c73a-41a0-abb6-d527391e109a';
-const GHL_LOCATION_ID = '7btYBBgZ5wdhJGIBYN4n';
-
 export default async function handler(req, res) {
+  // Get credentials from environment variables
+  const GHL_API_KEY = process.env.GHL_API_KEY;
+  const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
+  
+  if (!GHL_API_KEY || !GHL_LOCATION_ID) {
+    console.error('Missing GHL credentials in environment variables');
+    return res.status(500).json({ error: 'Server configuration error' });
+  }
+  
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
