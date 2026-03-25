@@ -1,35 +1,29 @@
 // GoHighLevel Form Integration for HORSEARMY.COM
-// Credentials loaded securely from server-side environment
-
-const GHL_CONFIG = {
-  apiKey: 'pit-c6d9c8db-c73a-41a0-abb6-d527391e109a',
-  locationId: '7btYBBgZ5wdhJGIBYN4n'
-};
+// Calls serverless function to avoid CORS and keep credentials secure
 
 async function submitToGoHighLevel(name, email) {
   try {
-    const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+    console.log('Submitting to serverless function:', { name, email });
+    
+    const response = await fetch('/api/subscribe', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${GHL_CONFIG.apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        locationId: GHL_CONFIG.locationId,
-        firstName: name.split(' ')[0] || name,
-        lastName: name.split(' ').slice(1).join(' ') || '',
-        email: email,
-        source: 'HORSEARMY.COM Website',
-        tags: ['Website Lead', 'Email Signup']
+        name: name,
+        email: email
       })
     });
 
-    if (response.ok) {
-      return { success: true };
+    const responseData = await response.json();
+    console.log('API Response:', response.status, responseData);
+
+    if (response.ok && responseData.success) {
+      return { success: true, data: responseData };
     } else {
-      const error = await response.json();
-      console.error('GHL Error:', error);
-      return { success: false, error: error.message || 'Unknown error' };
+      console.error('API Error Response:', responseData);
+      return { success: false, error: responseData.error || 'Unknown error' };
     }
   } catch (error) {
     console.error('Network Error:', error);
@@ -42,8 +36,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const form = document.querySelector('.email-form');
   
   if (form) {
+    console.log('Email form found, attaching handler');
+    
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
+      console.log('Form submitted');
       
       const nameInput = form.querySelector('input[type="text"]');
       const emailInput = form.querySelector('input[type="email"]');
@@ -51,6 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
       
       const name = nameInput?.value.trim() || '';
       const email = emailInput?.value.trim() || '';
+      
+      console.log('Form values:', { name, email });
       
       if (!name) {
         alert('Please enter your name');
@@ -77,22 +76,26 @@ document.addEventListener('DOMContentLoaded', function() {
       button.textContent = 'Joining...';
       button.disabled = true;
       
-      // Submit to GoHighLevel
+      // Submit to GoHighLevel via serverless function
       const result = await submitToGoHighLevel(name, email);
+      
+      console.log('Submission result:', result);
       
       if (result.success) {
         // Success message
-        alert('🐴 Welcome to the HORSEARMY network! Check your email soon for updates.');
+        alert('🐴 Welcome to HORSEARMY.COM! Check your email soon for updates.');
         nameInput.value = '';
         emailInput.value = '';
       } else {
-        // Error message
-        alert('Something went wrong. Please try again or email us directly at info@horsearmy.com');
+        // Error message with details for debugging
+        alert('Something went wrong: ' + (result.error || 'Unknown error') + '\n\nPlease check the browser console for details or email us directly at info@horsearmy.com');
       }
       
       // Reset button
       button.textContent = originalText;
       button.disabled = false;
     });
+  } else {
+    console.error('Email form not found on page');
   }
 });
