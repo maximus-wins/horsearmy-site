@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (result.success) {
         // Success message
-        alert('🐴 Welcome to the HORSE ARMY Network! Check your email soon for updates.');
+        alert('🐴 Welcome to HORSEARMY.COM! Check your email soon for updates.');
         nameInput.value = '';
         emailInput.value = '';
       } else {
