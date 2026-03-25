@@ -83,12 +83,13 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (result.success) {
         // Success message
-        alert('🐴 Welcome to HORSEARMY.COM! Check your email soon for updates.');
+        alert('🐴 Welcome to the HORSE ARMY Network! Check your email soon for updates.');
         nameInput.value = '';
         emailInput.value = '';
       } else {
-        // Error message with details for debugging
-        alert('Something went wrong: ' + (result.error || 'Unknown error') + '\n\nPlease check the browser console for details or email us directly at info@horsearmy.com');
+        // Error message
+        console.error('Form submission failed:', result);
+        alert('Unable to complete signup at this time. Please email us directly at info@horsearmy.com to join the network.');
       }
       
       // Reset button

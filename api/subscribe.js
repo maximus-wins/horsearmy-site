@@ -8,7 +8,12 @@ export default async function handler(req, res) {
   
   if (!GHL_API_KEY || !GHL_LOCATION_ID) {
     console.error('Missing GHL credentials in environment variables');
-    return res.status(500).json({ error: 'Server configuration error' });
+    console.error('GHL_API_KEY present:', !!GHL_API_KEY);
+    console.error('GHL_LOCATION_ID present:', !!GHL_LOCATION_ID);
+    return res.status(500).json({ 
+      success: false,
+      error: 'Server configuration error - environment variables not set. Please contact the administrator.' 
+    });
   }
   
   // Enable CORS
@@ -60,7 +65,8 @@ export default async function handler(req, res) {
     
     const ghlData = await ghlResponse.json();
     
-    console.log('GHL Response:', ghlResponse.status, ghlData);
+    console.log('GHL Response Status:', ghlResponse.status);
+    console.log('GHL Response Data:', JSON.stringify(ghlData, null, 2));
     
     if (ghlResponse.ok) {
       return res.status(200).json({ 
@@ -69,10 +75,11 @@ export default async function handler(req, res) {
         contactId: ghlData.contact?.id || ghlData.id
       });
     } else {
-      console.error('GHL Error:', ghlData);
+      console.error('GHL API Error - Status:', ghlResponse.status);
+      console.error('GHL API Error - Data:', ghlData);
       return res.status(ghlResponse.status).json({ 
         success: false, 
-        error: ghlData.message || ghlData.error || 'Failed to create contact in GHL'
+        error: ghlData.message || ghlData.error || ghlData.msg || 'Failed to create contact in GHL'
       });
     }
     
