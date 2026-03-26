@@ -39,8 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Email form found, attaching handler');
     
     form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+      // Prevent default form submission FIRST
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      
       console.log('Form submitted');
       
       const nameInput = form.querySelector('input[type="text"]');
@@ -84,27 +88,36 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (result.success) {
         // Success - show confirmation
+        console.log('Success! Showing confirmation...');
+        
+        // Update button and clear inputs
         button.textContent = '✓ You\'re In!';
         button.style.background = 'var(--teal)';
         button.style.borderColor = 'var(--teal)';
         nameInput.value = '';
         emailInput.value = '';
-        nameInput.placeholder = 'Welcome!';
-        emailInput.placeholder = 'Check your email soon';
         
-        // Show toast notification - always use showToast if available
-        if (typeof showToast === 'function') {
-          showToast('🐴 Welcome to HORSEARMY.COM!');
+        // ALWAYS show the success message
+        try {
+          if (typeof showToast === 'function') {
+            showToast('🐴 Welcome to HORSEARMY.COM!');
+            console.log('Toast shown via showToast function');
+          } else {
+            // Fallback if showToast doesn't exist
+            alert('🐴 Welcome to HORSEARMY.COM!');
+            console.log('Toast shown via alert fallback');
+          }
+        } catch (err) {
+          console.error('Error showing toast:', err);
+          alert('🐴 Welcome to HORSEARMY.COM!');
         }
         
-        // Reset after a few seconds
+        // Reset after 5 seconds
         setTimeout(() => {
           button.textContent = originalText;
           button.style.background = '';
           button.style.borderColor = '';
           button.disabled = false;
-          nameInput.placeholder = 'Your name';
-          emailInput.placeholder = 'Your email address';
         }, 5000);
       } else {
         // Error
