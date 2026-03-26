@@ -52,22 +52,22 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Form values:', { name, email });
       
       if (!name) {
-        alert('Please enter your name');
-        nameInput?.focus();
+        nameInput.style.borderColor = '#c0392b';
+        setTimeout(() => nameInput.style.borderColor = '', 2000);
         return;
       }
       
       if (!email) {
-        alert('Please enter your email');
-        emailInput?.focus();
+        emailInput.style.borderColor = '#c0392b';
+        setTimeout(() => emailInput.style.borderColor = '', 2000);
         return;
       }
       
       // Basic email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address');
-        emailInput?.focus();
+        emailInput.style.borderColor = '#c0392b';
+        setTimeout(() => emailInput.style.borderColor = '', 2000);
         return;
       }
       
@@ -82,19 +82,41 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Submission result:', result);
       
       if (result.success) {
-        // Success message
-        alert('🐴 Welcome to HORSEARMY.COM! Check your email soon for updates.');
+        // Success - show confirmation
+        button.textContent = '✓ You\'re In!';
+        button.style.background = 'var(--teal)';
+        button.style.borderColor = 'var(--teal)';
         nameInput.value = '';
         emailInput.value = '';
+        emailInput.placeholder = 'Welcome to the network!';
+        
+        // Show toast notification
+        if (typeof showToast === 'function') {
+          showToast('🐴 Welcome to HORSEARMY.COM!');
+        } else {
+          alert('🐴 Welcome to HORSEARMY.COM!');
+        }
+        
+        // Reset after a few seconds
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.background = '';
+          button.style.borderColor = '';
+          button.disabled = false;
+          emailInput.placeholder = 'Your email address';
+        }, 5000);
       } else {
-        // Error message
+        // Error
         console.error('Form submission failed:', result);
-        alert('Unable to complete signup at this time. Please email us directly at info@horsearmy.com to join the network.');
+        button.textContent = originalText;
+        button.disabled = false;
+        
+        if (typeof showToast === 'function') {
+          showToast('Unable to complete signup. Please try again.');
+        } else {
+          alert('Unable to complete signup at this time. Please email us directly at info@horsearmy.com');
+        }
       }
-      
-      // Reset button
-      button.textContent = originalText;
-      button.disabled = false;
     });
   } else {
     console.error('Email form not found on page');
