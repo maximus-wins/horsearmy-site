@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
+      e.stopPropagation();
       console.log('Form submitted');
       
       const nameInput = form.querySelector('input[type="text"]');
@@ -88,13 +89,12 @@ document.addEventListener('DOMContentLoaded', function() {
         button.style.borderColor = 'var(--teal)';
         nameInput.value = '';
         emailInput.value = '';
-        emailInput.placeholder = 'Welcome to the network!';
+        nameInput.placeholder = 'Welcome!';
+        emailInput.placeholder = 'Check your email soon';
         
-        // Show toast notification
+        // Show toast notification - always use showToast if available
         if (typeof showToast === 'function') {
           showToast('🐴 Welcome to HORSEARMY.COM!');
-        } else {
-          alert('🐴 Welcome to HORSEARMY.COM!');
         }
         
         // Reset after a few seconds
@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
           button.style.background = '';
           button.style.borderColor = '';
           button.disabled = false;
+          nameInput.placeholder = 'Your name';
           emailInput.placeholder = 'Your email address';
         }, 5000);
       } else {
@@ -113,10 +114,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (typeof showToast === 'function') {
           showToast('Unable to complete signup. Please try again.');
-        } else {
-          alert('Unable to complete signup at this time. Please email us directly at info@horsearmy.com');
         }
       }
+      
+      return false;
     });
   } else {
     console.error('Email form not found on page');
