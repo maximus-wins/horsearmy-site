@@ -1253,10 +1253,10 @@
       <div class="perk"><div class="perk-dot"></div><span>Guardian opportunities</span></div>
       <div class="perk"><div class="perk-dot"></div><span>Ways to help locally</span></div>
     </div>
-    <form class="email-form-stacked" onsubmit="return false;">
-      <input type="text" name="name" placeholder="Your name" class="stacked-input"/>
-      <input type="email" name="email" placeholder="Your email address" class="stacked-input"/>
-      <button type="submit" class="stacked-btn">Join the Network →</button>
+    <form class="email-form">
+      <input type="text" name="name" placeholder="Your name" style="color: var(--text-dark); background: #ffffff;" required />
+      <input type="email" name="email" placeholder="Your email address" style="color: var(--text-dark); background: #ffffff;" required />
+      <button type="submit">Join the Network →</button>
     </form>
     <p class="email-note">No spam. Unsubscribe anytime. We respect your inbox.</p>
   </div>
@@ -1326,44 +1326,8 @@
     }
   });
 
-  // --- Email Form Handler ---
-  // TODO: Replace this with your actual email platform integration.
-  // For Mailchimp: replace the fetch URL with your Mailchimp form action URL.
-  // For Klaviyo, ConvertKit, etc.: swap the fetch logic for their embed code.
-  const emailForm = document.querySelector('.email-form-stacked');
-  if (emailForm) {
-    emailForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const input = emailForm.querySelector('input[type="email"]');
-      const btn = emailForm.querySelector('button');
-      const email = input.value.trim();
 
-      if (!email || !email.includes('@')) {
-        input.style.borderColor = '#c0392b';
-        setTimeout(() => input.style.borderColor = '', 2000);
-        return;
-      }
-
-      // Show confirmation state
-      btn.textContent = '✓ You\'re In!';
-      btn.style.background = 'var(--teal)';
-      btn.style.borderColor = 'var(--teal)';
-      input.value = '';
-      input.placeholder = 'Welcome to the network!';
-      input.disabled = true;
-      btn.disabled = true;
-
-      // Show toast
-      showToast('You\'re in! Welcome to the Horse Army network.');
-
-      // TODO: Replace with real API call, e.g.:
-      // fetch('YOUR_MAILCHIMP_OR_EMAIL_ENDPOINT', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ email }),
-      //   headers: { 'Content-Type': 'application/json' }
-      // });
-    });
-
-    // Allow pressing Enter in input
-    emailForm.querySelector('input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') emailForm.dispatchEven
+</script>
+<script src="ghl-integration.js"></script>
+</body>
+</html>
