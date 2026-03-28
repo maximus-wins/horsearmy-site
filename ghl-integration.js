@@ -91,32 +91,32 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Success! Showing confirmation...');
         
         // Update button and clear inputs
-        button.textContent = '✓ You\'re In!';
+        button.textContent = 'YOU\'RE IN';
         button.style.background = 'var(--teal)';
-        button.style.borderColor = 'var(--teal)';
+        button.style.color = '#ffffff';
         nameInput.value = '';
         emailInput.value = '';
         
         // ALWAYS show the success message
         try {
           if (typeof showToast === 'function') {
-            showToast('🐴 Welcome to HORSEARMY.COM!');
+            showToast('🐴 WELCOME TO HORSEARMY.COM');
             console.log('Toast shown via showToast function');
           } else {
             // Fallback if showToast doesn't exist
-            alert('🐴 Welcome to HORSEARMY.COM!');
+            alert('🐴 WELCOME TO HORSEARMY.COM');
             console.log('Toast shown via alert fallback');
           }
         } catch (err) {
           console.error('Error showing toast:', err);
-          alert('🐴 Welcome to HORSEARMY.COM!');
+          alert('🐴 WELCOME TO HORSEARMY.COM');
         }
         
         // Reset after 5 seconds
         setTimeout(() => {
           button.textContent = originalText;
           button.style.background = '';
-          button.style.borderColor = '';
+          button.style.color = '';
           button.disabled = false;
         }, 5000);
       } else {
