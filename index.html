@@ -631,10 +631,11 @@
   }
 
   /* Stacked email form */
-  .email-form-stacked {
+
+  /* Email Form - Stay Connected */
   .email-form {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 12px;
     max-width: 440px;
     margin: 0 auto;
@@ -642,25 +643,26 @@
   }
 
   .email-form input {
-    width: 100%;
+    width: 100% !important;
     background: #ffffff !important;
-    border: 1px solid rgba(201,168,76,0.35);
-    color: var(--text-dark) !important;
+    border: 1px solid rgba(201,168,76,0.35) !important;
+    color: #1a1a1a !important;
     padding: 16px 20px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     outline: none;
     transition: border-color 0.2s;
     border-radius: 2px;
+    box-sizing: border-box;
   }
 
   .email-form input::placeholder { color: #999994; }
   .email-form input:focus { border-color: var(--teal); outline: none; }
 
   .email-form button {
-    width: 100%;
-    background: var(--gold);
-    color: var(--black);
+    width: 100% !important;
+    background: var(--gold) !important;
+    color: var(--black) !important;
     border: none;
     padding: 16px 20px;
     font-family: 'Inter', sans-serif;
@@ -671,6 +673,7 @@
     cursor: pointer;
     transition: all 0.2s;
     border-radius: 2px;
+    box-sizing: border-box;
   }
 
   .email-form button:hover {
@@ -678,50 +681,6 @@
     transform: translateY(-1px);
   }
 
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-width: 440px;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .stacked-input {
-    width: 100%;
-    background: #ffffff;
-    border: 1px solid rgba(201,168,76,0.35);
-    color: var(--text-dark);
-    padding: 16px 20px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s;
-    border-radius: 2px;
-  }
-
-  .stacked-input::placeholder { color: #999994; }
-  .stacked-input:focus { border-color: var(--teal); outline: none; }
-
-  .stacked-btn {
-    width: 100%;
-    background: var(--gold);
-    color: var(--dark);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 18px 28px;
-    border: 2px solid var(--gold);
-    cursor: pointer;
-    transition: all 0.25s;
-    font-family: 'Cinzel', serif;
-    border-radius: 2px;
-  }
-
-  .stacked-btn:hover { background: var(--gold-light); border-color: var(--gold-light); }
-
-  .email-note {
     font-size: 11px;
     color: rgba(247,243,236,0.25);
     margin-top: 16px;
