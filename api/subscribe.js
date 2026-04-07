@@ -58,7 +58,7 @@ export default async function handler(req, res) {
       lastName: lastName,
       email: email,
       source: 'HORSEARMY.COM Website',
-      tags: ['Website Lead', 'Email Signup']
+      tags: ['website-signup', 'horsearmy-lead']
     };
     
     console.log('Request body:', JSON.stringify(requestBody, null, 2));
